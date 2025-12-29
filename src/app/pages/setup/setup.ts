@@ -11,13 +11,8 @@ import { Storage } from '../../core/services/storage';
 })
 export class Setup {
   storage = inject(Storage);
-  categoria = '';
-  jugadores : number | undefined = 0;
-  impostores : number | null = null;
 
-  ngOnInit() {
-    this.categoria = this.storage.cargarCategoria();
-    this.jugadores = this.storage.cargarJugadores().length;
-    this.impostores = this.storage.cargarImpostores();
-  }
+  categoria = this.storage.categoria;
+  jugadores = this.storage.cantidadJugadores;
+  impostores = this.storage.impostores;
 }

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -8,41 +8,87 @@ import { map } from 'rxjs/operators';
 })
 export class Storage {
   http = inject(HttpClient);
+  // Signals privados para escritura
+  private categoriaSignal = signal<string>(this.cargarCategoriaInicial());
+  private jugadoresSignal = signal<Player[]>(this.cargarJugadoresInicial());
+  private impostoresSignal = signal<number | null>(this.cargarImpostoresInicial());
 
-  guardarCategoria(categoria: string) {
-    localStorage.setItem('category', JSON.stringify(categoria));
-  }
+  // Signals públicos de solo lectura
+  categoria = this.categoriaSignal.asReadonly();
+  jugadores = this.jugadoresSignal.asReadonly();
+  impostores = this.impostoresSignal.asReadonly();
 
-  cargarCategoria() {
+  // Signal computado para cantidad de jugadores
+  cantidadJugadores = computed(() => this.jugadoresSignal().length);
+
+  // Métodos de carga inicial (privados)
+  private cargarCategoriaInicial(): string {
     const data = localStorage.getItem('category');
-  
-    if (data) {
-      return JSON.parse(data);
-    }
+    return data ? JSON.parse(data) : '';
   }
 
-  guardarJugadores(jugadores: Player[]) {
-    localStorage.setItem('players', JSON.stringify(jugadores));
-  }
-
-  cargarJugadores() {
+  private cargarJugadoresInicial(): Player[] {
     const data = localStorage.getItem('players');
-    if (data) {
-      return JSON.parse(data);
-    }
+    return data ? JSON.parse(data) : [];
   }
 
-  guardarImpostores(impostores: number) {
-    localStorage.setItem('impostores', impostores.toString());
-  }
-  
-  cargarImpostores(): number | null {
+  private cargarImpostoresInicial(): number | null {
     const data = localStorage.getItem('impostores');
     return data !== null ? Number(data) : null;
   }
 
+  // Métodos de guardado
+  guardarCategoria(categoria: string) {
+    localStorage.setItem('category', JSON.stringify(categoria));
+    this.categoriaSignal.set(categoria);
+  }
+
+  guardarJugadores(jugadores: Player[]) {
+    localStorage.setItem('players', JSON.stringify(jugadores));
+    this.jugadoresSignal.set(jugadores);
+  }
+
+  guardarImpostores(impostores: number) {
+    localStorage.setItem('impostores', impostores.toString());
+    this.impostoresSignal.set(impostores);
+  }
+
+  // Helpers
+  agregarJugador(player: Player) {
+    const current = this.jugadoresSignal();
+    const updated = [...current, player];
+    localStorage.setItem('players', JSON.stringify(updated));
+    this.jugadoresSignal.set(updated);
+  }
+
+  eliminarJugador(index: number) {
+    const current = this.jugadoresSignal();
+    const updated = current.filter((_, i) => i !== index);
+    localStorage.setItem('players', JSON.stringify(updated));
+    this.jugadoresSignal.set(updated);
+  }
+
+  aumentarImpostores() {
+    const current = this.impostoresSignal() ?? 1;
+    if (current < 4) {
+      const nuevo = current + 1;
+      localStorage.setItem('impostores', nuevo.toString());
+      this.impostoresSignal.set(nuevo);
+    }
+  }
+
+  disminuirImpostores() {
+    const current = this.impostoresSignal() ?? 1;
+    if (current > 1) {
+      const nuevo = current - 1;
+      localStorage.setItem('impostores', nuevo.toString());
+      this.impostoresSignal.set(nuevo);
+    }
+  }
+
+  // Game
   cargarPalabra(): Observable<string> {
-    const categoria = this.cargarCategoria();
+    const categoria = this.categoria();
     let ruta = ``;
 
     switch (categoria ){

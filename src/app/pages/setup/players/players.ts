@@ -12,31 +12,24 @@ import { Storage } from '../../../core/services/storage';
 export class Players {
   router = inject(Router);
   storage = inject(Storage);
-  players: Player[] = [];
   max = 10;
+  players = this.storage.jugadores;
 
-  ngOnInit(){
-    const storedPlayers = this.storage.cargarJugadores();
-    if(storedPlayers){
-      this.players = storedPlayers;
-    }
-  }
-
-  agregarJugador(player: string){
-    if(this.players.length >= this.max){
+  agregarJugador(player: string) {
+    if (this.players().length >= this.max) {
       alert('Se ha alcanzado el número máximo de jugadores.');
       return;
     }
-    this.players.push({ nombre: player, rol: 'civil' });
-    this.storage.guardarJugadores(this.players);
+    
+    this.storage.agregarJugador({ nombre: player, rol: 'civil' });
   }
 
-  eliminarJugador(index: number){
-    this.players.splice(index, 1);
-    this.storage.guardarJugadores(this.players);
+  eliminarJugador(index: number) {
+    this.storage.eliminarJugador(index);
   }
 
-  actualizarJugadores(){
-    this.storage.guardarJugadores(this.players);
+  actualizarJugadores() {
+    const currentPlayers = this.players();
+    this.storage.guardarJugadores(currentPlayers);
   }
 }

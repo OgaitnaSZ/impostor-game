@@ -11,7 +11,7 @@
         Jugadores
       </div>
       <div class="flex gap-2 opacity-50 font-extralight">
-        {{ jugadores || 0 }}
+        {{ jugadores() || 0 }}
         <span class="material-symbols-outlined"> arrow_forward_ios </span>
       </div>
     </a>
@@ -25,7 +25,7 @@
         Categoría
       </div>
       <div class="flex gap-2 opacity-50 font-extralight">
-        {{ categoria || 'Sin Categoría' }}
+        {{ categoria() || 'Sin Categoría' }}
         <span class="material-symbols-outlined"> arrow_forward_ios </span>
       </div>
     </a>
@@ -39,7 +39,7 @@
           Impostores
         </div>
         <div class="flex gap-2 opacity-50 font-extralight">
-          {{ impostores || 0 }}
+          {{ impostores() || 0 }}
           <span class="material-symbols-outlined"> arrow_forward_ios </span>
         </div>
     </a>
@@ -51,7 +51,7 @@
   
   
   <button
-    [disabled]="categoria === '' || jugadores == null || impostores == null"
+    [disabled]="categoria() === '' || jugadores() == null || impostores() == null"
     routerLink="/game"
     class="
       w-full mt-6 px-4 py-4 rounded-lg

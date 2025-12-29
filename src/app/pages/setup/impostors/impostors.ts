@@ -11,26 +11,14 @@ import { Storage } from '../../../core/services/storage';
 })
 export class Impostors {
   storage = inject(Storage);
-  impostores = 1;
+  impostores = this.storage.impostores;
 
-  ngOnInit(){
-    const storedImpostor = this.storage.cargarImpostores();
-    if(storedImpostor){
-      this.impostores = storedImpostor;
-    }
+  aumentarImpostores() {
+    this.storage.aumentarImpostores();
   }
 
-  aumentarImpostores(){
-    if(this.impostores < 4){
-      this.impostores++;
-      this.storage.guardarImpostores(this.impostores);
-    }
+  disminuirImpostores() {
+    this.storage.disminuirImpostores();
   }
 
-  disminuirImpostores(){
-    if(this.impostores >1){
-      this.impostores--;
-      this.storage.guardarImpostores(this.impostores);
-    }
-  }
 }

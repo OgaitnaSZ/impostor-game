@@ -1,10 +1,10 @@
 <main class="flex items-center justify-center">
     <div class="p-4 w-full max-w-md h-[100vh] flex flex-col justify-between">
-    @if(jugadorActualIndex < jugadores.length) {
+    @if(jugadorActualIndex() < jugadores().length) {
         <app-player-reveal
-        [jugador]="jugadores[jugadorActualIndex]"
-        [palabra]="palabra"
-        [textoBoton]="jugadorActualIndex < jugadores.length - 1 ? 'Siguiente Jugador' : 'Empezar Partida'"
+        [jugador]="jugadores()[jugadorActualIndex()]"
+        [palabra]="palabra()"
+        [textoBoton]="jugadorActualIndex() < jugadores().length - 1 ? 'Siguiente Jugador' : 'Empezar Partida'"
         (onNextPlayer)="siguienteJugador()"
         />
         
@@ -25,10 +25,10 @@
              </button>
          </div>
     } @else {
-        @if(!partidaFinalizada) {
+        @if(!partidaFinalizada()) {
             <app-game-timer
                 [tiempoFormateado]="tiempoFormateado"
-                [primerJugador]="jugadores[0].nombre"
+                [primerJugador]="jugadores()[0].nombre"
                 (onEndGame)="terminarPartida()"
             />
         } @else {
@@ -36,7 +36,7 @@
                 [tiempoFinal]="tiempoFormateado"
                 (onPlayAgain)="volverAJugar()"
                 (onBackToMenu)="volverAlMenu()"
-                [impostores]="impostoresNombres"
+                [impostores]="impostoresNombres()"
             />
         }
     }

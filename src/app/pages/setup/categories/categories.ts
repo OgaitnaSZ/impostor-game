@@ -13,11 +13,7 @@ export class Categories {
   router = inject(Router);
   storage = inject(Storage);
 
-  categoriaActual = '';
-
-  ngOnInit(){
-    this.categoriaActual = this.storage.cargarCategoria();
-  }
+  categoriaActual = this.storage.categoria;
 
   protected readonly categories = [
     "Dragon Ball",

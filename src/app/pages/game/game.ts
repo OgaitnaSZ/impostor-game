@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Storage } from '../../core/services/storage';
 import { CommonModule } from '@angular/common';
@@ -22,16 +22,20 @@ export class Game {
   private router = inject(Router);
   private gameService = inject(GameService);
   
-  jugadores: Player[] = [];
-  impostores: number | null = null;
-  impostoresNombres: string[] = [];
-  palabra = '';
-  jugadorActualIndex = 0;
-  tiempoTranscurrido = 0;
-  partidaFinalizada = false;
-
+  // Signals del storage (readonly)
+  jugadoresStorage = this.storage.jugadores;
+  impostoresStorage = this.storage.impostores;
+  
+  // Estado local del componente
+  jugadores = signal<Player[]>([]);
+  impostoresNombres = signal<string[]>([]);
+  palabra = signal<string>('');
+  jugadorActualIndex = signal<number>(0);
+  tiempoTranscurrido = signal<number>(0);
+  partidaFinalizada = signal<boolean>(false);
+  
   get tiempoFormateado(): string {
-    return this.gameService.formatearTiempo(this.tiempoTranscurrido);
+    return this.gameService.formatearTiempo(this.tiempoTranscurrido());
   }
 
   ngOnInit() {
@@ -43,50 +47,58 @@ export class Game {
   }
 
   inicializarJuego() {
-    const jugadoresCargados = this.storage.cargarJugadores();
-    this.impostores = this.storage.cargarImpostores();
+    const jugadoresCargados = this.jugadoresStorage();
+    const impostores = this.impostoresStorage();
 
-    if (jugadoresCargados.length > 0 && this.impostores !== null && this.impostores > 0) {
+    if (jugadoresCargados.length > 0 && impostores !== null && impostores > 0) {
       // Cargar palabra
       this.storage.cargarPalabra().subscribe(palabra => {
-        this.palabra = palabra;
+        this.palabra.set(palabra);
       });
 
       // Desordenar y asignar roles
       const jugadoresDesordenados = this.gameService.desordenarJugadores(jugadoresCargados);
-      this.jugadores = this.gameService.asignarRoles(jugadoresDesordenados, this.impostores);
-      this.impostoresNombres = this.jugadores
+      const jugadoresConRoles = this.gameService.asignarRoles(jugadoresDesordenados, impostores);
+      
+      this.jugadores.set(jugadoresConRoles);
+      
+      const nombresImpostores = jugadoresConRoles
         .filter(j => j.rol === 'impostor')
         .map(j => j.nombre);
+      this.impostoresNombres.set(nombresImpostores);
     }
   }
 
   siguienteJugador() {
-    if (this.jugadorActualIndex < this.jugadores.length - 1) {
-      this.jugadorActualIndex++;
+    const currentIndex = this.jugadorActualIndex();
+    const totalJugadores = this.jugadores().length;
+    
+    if (currentIndex < totalJugadores - 1) {
+      this.jugadorActualIndex.set(currentIndex + 1);
     } else {
       // Empezar partida e iniciar temporizador
-      this.jugadorActualIndex++;
+      this.jugadorActualIndex.set(currentIndex + 1);
       this.gameService.iniciarTemporizador((tiempo) => {
-        this.tiempoTranscurrido = tiempo;
+        this.tiempoTranscurrido.set(tiempo);
       });
     }
   }
 
   terminarPartida() {
-    this.tiempoTranscurrido = this.gameService.detenerTemporizador();
-    this.partidaFinalizada = true;
+    const tiempoFinal = this.gameService.detenerTemporizador();
+    this.tiempoTranscurrido.set(tiempoFinal);
+    this.partidaFinalizada.set(true);
   }
 
   volverAJugar() {
-    this.jugadorActualIndex = 0;
-    this.tiempoTranscurrido = 0;
-    this.partidaFinalizada = false;
+    this.jugadorActualIndex.set(0);
+    this.tiempoTranscurrido.set(0);
+    this.partidaFinalizada.set(false);
     this.inicializarJuego();
   }
 
   cambiarPalabra() {
-    this.jugadorActualIndex = 0;
+    this.jugadorActualIndex.set(0);
     this.inicializarJuego();
   }
 
