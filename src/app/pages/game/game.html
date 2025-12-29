@@ -26,17 +26,17 @@
          </div>
     } @else {
         @if(!partidaFinalizada) {
-        <app-game-timer
-            [tiempoFormateado]="tiempoFormateado"
-            (onEndGame)="terminarPartida()"
-        />
+            <app-game-timer
+                [tiempoFormateado]="tiempoFormateado"
+                (onEndGame)="terminarPartida()"
+            />
         } @else {
-        <app-game-end
-            [tiempoFinal]="tiempoFormateado"
-            (onPlayAgain)="volverAJugar()"
-            (onBackToMenu)="volverAlMenu()"
-            [impostores]="impostoresNombres"
-        />
+            <app-game-end
+                [tiempoFinal]="tiempoFormateado"
+                (onPlayAgain)="volverAJugar()"
+                (onBackToMenu)="volverAlMenu()"
+                [impostores]="impostoresNombres"
+            />
         }
     }
     </div>

@@ -5,6 +5,7 @@ import { Game } from './pages/game/game';
 import { Setup } from './pages/setup/setup';
 import { Menu } from './pages/menu/menu';
 import { Impostors } from './pages/setup/impostors/impostors';
+import { ComoJugar } from './pages/como-jugar/como-jugar';
 
 export const routes: Routes = [
   { path: '', component: Menu },
@@ -17,5 +18,6 @@ export const routes: Routes = [
     ]
   },
   { path: 'game', component: Game },
+  { path: 'como-jugar', component: ComoJugar },
   { path: '**', component: Menu },
 ];

@@ -10,10 +10,12 @@
     </div>
 
     <div>
-        <h2>Los impostores eran:</h2>
+        <h2 class="text-lg">Los impostores eran:</h2>
         <ul>
-            @for(impostor of impostores ; track $index){
-                <li class="text-xl text-indigo-950 font-bold">{{ impostor }}</li>
+            @for(impostor of impostores; track $index) {
+                <li class="name-wrapper text-red-500 font-bold text-2xl h-8">
+                {{ impostor }}
+                </li>
             }
         </ul>
     </div>
