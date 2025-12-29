@@ -1,0 +1,42 @@
+<main class="flex items-center justify-center">
+    <div class="w-full max-w-md">
+    @if(jugadorActualIndex < jugadores.length) {
+        <app-player-reveal
+        [jugador]="jugadores[jugadorActualIndex]"
+        [palabra]="palabra"
+        [textoBoton]="jugadorActualIndex < jugadores.length - 1 ? 'Siguiente Jugador' : 'Empezar Partida'"
+        (onNextPlayer)="siguienteJugador()"
+        />
+        
+        <!-- Botones adicionales -->
+         <div class="px-4">
+             <button 
+             (click)="cambiarPalabra()"
+             class="w-full rounded-2xl bg-purple-600 text-gray-100 px-4 py-2 mt-4"
+             >
+             Cambiar Palabra
+             </button>
+             
+             <button 
+             (click)="volverAlMenu()"
+             class="w-full rounded-2xl bg-purple-600 text-gray-100 px-4 py-2 mt-4"
+             >
+             Volver al Menú
+             </button>
+         </div>
+    } @else {
+        @if(!partidaFinalizada) {
+        <app-game-timer
+            [tiempoFormateado]="tiempoFormateado"
+            (onEndGame)="terminarPartida()"
+        />
+        } @else {
+        <app-game-end
+            [tiempoFinal]="tiempoFormateado"
+            (onPlayAgain)="volverAJugar()"
+            (onBackToMenu)="volverAlMenu()"
+        />
+        }
+    }
+    </div>
+</main>

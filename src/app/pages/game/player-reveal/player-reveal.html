@@ -1,0 +1,65 @@
+<div class="bg-purple-800 rounded-b-xl shadow-2xl overflow-hidden">
+    <!-- Header -->
+    <div class="p-6 text-center">
+    <p class="text-gray-100 text-xl font-semibold">
+        Pasale el celular a <span class="text-purple-950 font-bold">{{jugador.nombre}}</span>
+    </p>
+    </div>
+
+    <!-- Área deslizable -->
+    <div class="relative h-96 overflow-hidden">
+    <!-- Contenido revelado (fondo) -->
+    <div class="absolute inset-0 flex flex-col items-center justify-center p-6">
+        <div class="text-center">
+        <p 
+            class="text-6xl font-bold mb-4"
+            [ngClass]="{'text-red-600': jugador.rol === 'impostor', 'text-green-300': jugador.rol === 'civil'}"
+        >
+            {{jugador.rol === 'impostor' ? 'IMPOSTOR' : 'CIVIL'}}
+        </p>
+        
+        @if(jugador.rol === 'civil') {
+            <div class="mt-8">
+            <p class="text-gray-300 text-sm mb-2">Tu palabra es:</p>
+            <p class="text-gray-100 text-4xl font-bold bg-purple-950 px-6 py-4 rounded-lg">
+                {{ palabra }}
+            </p>
+            </div>
+        } @else {
+            <p class="text-gray-300 text-lg mt-4">
+            Encuentra a los civiles sin revelar tu identidad
+            </p>
+        }
+        </div>
+    </div>
+
+    <!-- Cortina deslizable (adelante) -->
+    <div 
+        class="absolute inset-0 bg-purple-700 flex flex-col items-center justify-center transition-transform duration-300 ease-out touch-none cursor-grab active:cursor-grabbing"
+        [class.duration-300]="!isDragging"
+        [style.transform]="'translateY(' + dragOffset + 'px)'"
+        (mousedown)="startDrag($event)"
+        (touchstart)="startDrag($event)"
+        (mousemove)="onDrag($event)"
+        (touchmove)="onDrag($event)"
+        (mouseup)="endDrag()"
+        (touchend)="endDrag()"
+        (mouseleave)="endDrag()"
+    >
+        <svg class="w-16 h-16 text-gray-100 mb-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+        <p class="text-gray-100 text-lg font-medium">Desliza hacia abajo</p>
+    </div>
+    </div>
+
+    <!-- Botón siguiente -->
+    <div class="bg-purple-800 p-6"> 
+    <button 
+        (click)="onNextPlayer.emit()"
+        class="w-full bg-purple-950 text-gray-100 font-bold py-4 px-6 rounded-lg"
+    >
+        {{ textoBoton }}
+    </button>
+    </div>
+</div>
