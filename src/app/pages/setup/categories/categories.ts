@@ -25,6 +25,5 @@ export class Categories {
 
   guardarCategoria(categoria: string) {
     this.storage.guardarCategoria(categoria);
-    this.router.navigate(['/setup/players']);
   }
 }
