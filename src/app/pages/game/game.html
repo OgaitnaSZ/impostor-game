@@ -28,6 +28,7 @@
         @if(!partidaFinalizada) {
             <app-game-timer
                 [tiempoFormateado]="tiempoFormateado"
+                [primerJugador]="jugadores[0].nombre"
                 (onEndGame)="terminarPartida()"
             />
         } @else {

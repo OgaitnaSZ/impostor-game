@@ -1,6 +1,6 @@
 <div class="bg-indigo-700 rounded-b-xl shadow-2xl p-8 text-center">
     <h2 class="text-white text-3xl font-bold mb-4">¡Que comience el juego!</h2>
-    <p class="text-white text-lg mb-6">Todos los jugadores conocen su rol</p>
+    <p class="text-white text-lg mb-6">Empieza <span class="text-indigo-950 font-bold">{{primerJugador}}</span></p>
     
     <!-- Temporizador -->
     <div class="bg-white rounded-lg p-6 mb-6">
@@ -12,7 +12,7 @@
     
     <button 
     (click)="onEndGame.emit()"
-    class="bg-indigo-950 text-gray-100 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors"
+    class="bg-indigo-950 text-gray-100 font-bold py-3 px-8 rounded-lg"
     >
     Terminar Partida
     </button>

@@ -9,5 +9,6 @@ import { CommonModule } from '@angular/common';
 })
 export class GameTimer {
   @Input() tiempoFormateado!: string;
+  @Input() primerJugador!: string;
   @Output() onEndGame = new EventEmitter<void>();
 }

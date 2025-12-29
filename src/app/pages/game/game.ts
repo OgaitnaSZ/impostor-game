@@ -55,7 +55,6 @@ export class Game {
       // Desordenar y asignar roles
       const jugadoresDesordenados = this.gameService.desordenarJugadores(jugadoresCargados);
       this.jugadores = this.gameService.asignarRoles(jugadoresDesordenados, this.impostores);
-      console.log(this.jugadores);
       this.impostoresNombres = this.jugadores
         .filter(j => j.rol === 'impostor')
         .map(j => j.nombre);
