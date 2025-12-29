@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Storage } from '../../core/services/storage';
 
 @Component({
   selector: 'app-setup',
@@ -9,4 +10,14 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './setup.css',
 })
 export class Setup {
+  storage = inject(Storage);
+  categoria = '';
+  jugadores : number | undefined = 0;
+  impostores : number | null = null;
+
+  ngOnInit() {
+    this.categoria = this.storage.cargarCategoria();
+    this.jugadores = this.storage.cargarJugadores().length;
+    this.impostores = this.storage.cargarImpostores();
+  }
 }

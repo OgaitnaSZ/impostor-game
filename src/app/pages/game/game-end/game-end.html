@@ -1,30 +1,40 @@
-<div class="bg-purple-800 rounded-lg shadow-2xl p-8 text-center">
+<div class="bg-indigo-700 rounded-lg shadow-2xl p-8 text-center">
     <h2 class="text-gray-100 text-3xl font-bold mb-4">Partida Finalizada</h2>
     
     <!-- Tiempo final -->
-    <div class="bg-purple-900 rounded-lg p-6 mb-6">
-    <p class="text-gray-300 text-sm mb-2">Tiempo total</p>
-    <div class="text-5xl font-bold text-gray-100 font-mono">
-        {{ tiempoFinal }}
+    <div class="bg-indigo-950 rounded-lg p-6 mb-6">
+        <p class="text-gray-300 text-sm mb-2">Tiempo total</p>
+        <div class="text-5xl font-bold text-gray-100 font-mono">
+            {{ tiempoFinal }}
+        </div>
     </div>
+
+    <div>
+        <h2>Los impostores eran:</h2>
+        <ul>
+            @for(impostor of impostores ; track $index){
+                <li class="text-xl text-indigo-950 font-bold">{{ impostor }}</li>
+            }
+        </ul>
     </div>
     
-    <p class="text-gray-200 text-lg mb-8">¿Qué deseas hacer?</p>
-    
-    <!-- Botones de acción -->
-    <div class="space-y-3">
-    <button 
-        (click)="onPlayAgain.emit()"
-        class="w-full bg-green-500 text-gray-100 font-bold py-4 px-6 rounded-lg transition-colors"
-    >
-        Volver a Jugar
-    </button>
-    
-    <button 
-        (click)="onBackToMenu.emit()"
-        class="w-full bg-purple-950 text-gray-100 font-bold py-4 px-6 rounded-lg transition-colors"
-    >
-        Volver al Menú
-    </button>
+    <div class="mt-6">
+        <p class="text-gray-200 text-lg mb-4">¿Qué deseas hacer?</p>
+        <!-- Botones de acción -->
+        <div class="space-y-4">
+            <button 
+                (click)="onPlayAgain.emit()"
+                class="w-full bg-green-600 text-gray-100 font-bold py-4 px-6 rounded-lg transition-colors"
+            >
+                Jugar de Nuevo
+            </button>
+            
+            <button 
+                (click)="onBackToMenu.emit()"
+                class="w-full bg-indigo-950 text-gray-100 font-bold py-4 px-6 rounded-lg transition-colors"
+            >
+                Volver al Menú
+            </button>
+        </div>
     </div>
 </div>

@@ -1,0 +1,15 @@
+<section class="text-center mt-10 flex flex-col items-center">
+    <h2 class="text-2xl">Impostores</h2>
+    <p class="text-sm text-gray-600">Recomendado 1 cada 3 jugadores</p>
+    <article class="mt-4 flex gap-4 text-2xl">
+        <button class="p-3 rounded bg-indigo-950" (click)="disminuirImpostores()">
+            -
+        </button>
+
+        <p class="p-3">{{impostores}}</p>
+
+        <button class="p-3 rounded bg-indigo-950" (click)="aumentarImpostores()">
+            +
+        </button>
+    </article>
+</section>

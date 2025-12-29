@@ -1,8 +1,8 @@
-<div class="bg-purple-800 rounded-b-xl shadow-2xl overflow-hidden">
+<div class="bg-indigo-700 rounded-lg shadow-2xl overflow-hidden">
     <!-- Header -->
     <div class="p-6 text-center">
     <p class="text-gray-100 text-xl font-semibold">
-        Pasale el celular a <span class="text-purple-950 font-bold">{{jugador.nombre}}</span>
+        Pasale el celular a <span class="text-indigo-950 font-bold">{{jugador.nombre}}</span>
     </p>
     </div>
 
@@ -21,7 +21,7 @@
         @if(jugador.rol === 'civil') {
             <div class="mt-8">
             <p class="text-gray-300 text-sm mb-2">Tu palabra es:</p>
-            <p class="text-gray-100 text-4xl font-bold bg-purple-950 px-6 py-4 rounded-lg">
+            <p class="text-gray-100 text-4xl font-bold bg-indigo-950 px-6 py-4 rounded-lg">
                 {{ palabra }}
             </p>
             </div>
@@ -35,7 +35,7 @@
 
     <!-- Cortina deslizable (adelante) -->
     <div 
-        class="absolute inset-0 bg-purple-700 flex flex-col items-center justify-center transition-transform duration-300 ease-out touch-none cursor-grab active:cursor-grabbing"
+        class="absolute inset-0 bg-indigo-700 flex flex-col items-center justify-center transition-transform duration-300 ease-out touch-none cursor-grab active:cursor-grabbing"
         [class.duration-300]="!isDragging"
         [style.transform]="'translateY(' + dragOffset + 'px)'"
         (mousedown)="startDrag($event)"
@@ -54,10 +54,10 @@
     </div>
 
     <!-- Botón siguiente -->
-    <div class="bg-purple-800 p-6"> 
+    <div class="bg-indigo-800 p-6"> 
     <button 
         (click)="onNextPlayer.emit()"
-        class="w-full bg-purple-950 text-gray-100 font-bold py-4 px-6 rounded-lg"
+        class="w-full bg-indigo-950 text-gray-100 font-bold py-4 px-6 rounded-lg"
     >
         {{ textoBoton }}
     </button>

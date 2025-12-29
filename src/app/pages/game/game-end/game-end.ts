@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 })
 export class GameEnd {
   @Input() tiempoFinal!: string;
+  @Input() impostores!: string[];
   @Output() onPlayAgain = new EventEmitter<void>();
   @Output() onBackToMenu = new EventEmitter<void>();
 }

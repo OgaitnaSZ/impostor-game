@@ -18,12 +18,13 @@ import { GameEnd } from './game-end/game-end';
   styleUrl: './game.css',
 })
 export class Game {
-   private storage = inject(Storage);
+  private storage = inject(Storage);
   private router = inject(Router);
   private gameService = inject(GameService);
   
   jugadores: Player[] = [];
   impostores: number | null = null;
+  impostoresNombres: string[] = [];
   palabra = '';
   jugadorActualIndex = 0;
   tiempoTranscurrido = 0;
@@ -54,6 +55,10 @@ export class Game {
       // Desordenar y asignar roles
       const jugadoresDesordenados = this.gameService.desordenarJugadores(jugadoresCargados);
       this.jugadores = this.gameService.asignarRoles(jugadoresDesordenados, this.impostores);
+      console.log(this.jugadores);
+      this.impostoresNombres = this.jugadores
+        .filter(j => j.rol === 'impostor')
+        .map(j => j.nombre);
     }
   }
 

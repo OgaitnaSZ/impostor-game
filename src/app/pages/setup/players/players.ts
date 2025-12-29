@@ -14,7 +14,6 @@ export class Players {
   storage = inject(Storage);
   players: Player[] = [];
   max = 10;
-  impostores = 1;
 
   ngOnInit(){
     const storedPlayers = this.storage.cargarJugadores();

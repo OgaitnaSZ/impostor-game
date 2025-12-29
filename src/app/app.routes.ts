@@ -4,16 +4,16 @@ import { Categories } from './pages/setup/categories/categories';
 import { Game } from './pages/game/game';
 import { Setup } from './pages/setup/setup';
 import { Menu } from './pages/menu/menu';
-import { Empezar } from './pages/setup/empezar/empezar';
+import { Impostors } from './pages/setup/impostors/impostors';
 
 export const routes: Routes = [
   { path: '', component: Menu },
   { path: 'setup', component: Setup, 
     children: [
-      { path: 'categories', component: Categories },
       { path: 'players', component: Players},
-      { path: 'game', component: Empezar},
-      { path: '**', component: Categories},
+      { path: 'categories', component: Categories },
+      { path: 'impostors', component: Impostors},
+      { path: '**', component: Players},
     ]
   },
   { path: 'game', component: Game },
