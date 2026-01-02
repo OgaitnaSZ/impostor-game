@@ -4,7 +4,10 @@
     <article class="mt-4 flex flex-col gap-4 overflow-y-auto h-56">
         @for(player of players() ; track $index){
             <div class="flex w-full">
-                <input (change)="actualizarJugadores()" type="text" class="border-indigo-700 border-b flex-1" [(ngModel)]="players()[$index].nombre">
+                <input (change)="actualizarJugadores()" type="text" class="border-b flex-1" 
+                    [(ngModel)]="players()[$index].nombre"
+                    [class.border-red-500]="tieneNombreDuplicado($index)"
+                    [class.border-indigo-700]="!tieneNombreDuplicado($index)">
                 <button (click)="eliminarJugador($index)" class="text-red-500 text-2xl ms-2">
                     x
                 </button>

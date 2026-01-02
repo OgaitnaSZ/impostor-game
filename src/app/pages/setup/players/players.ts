@@ -16,17 +16,30 @@ export class Players {
   players = this.storage.jugadores;
 
   agregarJugador() {
+    const players = this.players();
     let player = `Jugador ${this.players().length + 1}`;
     let increment = 1;
 
-    if (this.players().length >= this.max) {
+    if (players.length >= this.max) {
       alert('Se ha alcanzado el número máximo de jugadores.');
       return;
     }
 
-    while (this.players().find(p => p.nombre === player)){
-      player = `Jugador ${this.players().length + increment}`;
+    while (players.find(p => p.nombre === player)){
+      player = `Jugador ${players.length + increment}`;
       increment++;
+    }
+
+    const hayDuplicados = players.some((p, i) =>
+      players.some((p2, j) =>
+        i !== j &&
+        p.nombre?.trim().toLowerCase() === p2.nombre?.trim().toLowerCase()
+      )
+    );
+  
+    if (hayDuplicados) {
+      alert('Ya existe un jugador con ese nombre');
+      return;
     }
 
     this.storage.agregarJugador({ nombre: player, rol: 'civil' });
@@ -37,7 +50,32 @@ export class Players {
   }
 
   actualizarJugadores() {
-    const currentPlayers = this.players();
-    this.storage.guardarJugadores(currentPlayers);
+    const players = this.players();
+  
+    const hayDuplicados = players.some((p, i) =>
+      players.some((p2, j) =>
+        i !== j &&
+        p.nombre?.trim().toLowerCase() === p2.nombre?.trim().toLowerCase()
+      )
+    );
+  
+    if (hayDuplicados) {
+      alert('Ya existe un jugador con ese nombre');
+      return;
+    }
+  
+    this.storage.guardarJugadores(players);
+  }
+
+  tieneNombreDuplicado(index: number): boolean {
+    const nombreActual = this.players()[index].nombre?.trim().toLowerCase();
+  
+    if (!nombreActual) return false;
+  
+    return this.players().some(
+      (p, i) =>
+        i !== index &&
+        p.nombre?.trim().toLowerCase() === nombreActual
+    );
   }
 }
