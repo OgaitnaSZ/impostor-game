@@ -9,3 +9,6 @@
 body {
   @apply bg-slate-950 text-gray-100 w-full
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

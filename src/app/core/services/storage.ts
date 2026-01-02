@@ -76,7 +76,8 @@ export class Storage {
 
   aumentarImpostores() {
     const current = this.impostoresSignal() ?? 1;
-    if (current < 4) {
+    const max = Math.max(1, Math.floor(this.jugadores().length / 3));
+    if (current < max) {
       const nuevo = current + 1;
       localStorage.setItem('impostores', nuevo.toString());
       this.impostoresSignal.set(nuevo);

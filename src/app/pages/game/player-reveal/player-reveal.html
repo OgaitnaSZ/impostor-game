@@ -2,7 +2,10 @@
     <!-- Header -->
     <div class="p-6 text-center">
     <p class="text-gray-100 text-xl font-semibold">
-        Pasale el celular a <span class="text-indigo-950 font-bold">{{jugador.nombre}}</span>
+        Pasale el celular a 
+        <span class="text-indigo-950 font-bold animate-fade-in">
+        {{jugador.nombre}}
+        </span>
     </p>
     </div>
 
@@ -57,7 +60,7 @@
     <div class="bg-indigo-800 p-6"> 
     <button 
         (click)="onNextPlayer.emit()"
-        class="w-full bg-indigo-950 text-gray-100 font-bold py-4 px-6 rounded-lg"
+        class="w-full bg-indigo-950 active:bg-indigo-700 text-gray-100 font-bold py-4 px-6 rounded-lg"
     >
         {{ textoBoton }}
     </button>

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Storage } from '../../../core/services/storage';
+import { Snackbar } from '../../../core/services/snackbar';
 
 @Component({
   selector: 'app-players',
@@ -12,7 +13,8 @@ import { Storage } from '../../../core/services/storage';
 export class Players {
   router = inject(Router);
   storage = inject(Storage);
-  max = 10;
+  snackbarService = inject(Snackbar);
+  max = 20;
   players = this.storage.jugadores;
 
   agregarJugador() {
@@ -21,7 +23,7 @@ export class Players {
     let increment = 1;
 
     if (players.length >= this.max) {
-      alert('Se ha alcanzado el número máximo de jugadores.');
+      this.snackbarService.show('Se ha alcanzado el número máximo de jugadores.', 'error');
       return;
     }
 
@@ -38,7 +40,7 @@ export class Players {
     );
   
     if (hayDuplicados) {
-      alert('Ya existe un jugador con ese nombre');
+      this.snackbarService.show('Ya existe un jugador con ese nombre', 'error');
       return;
     }
 
@@ -60,7 +62,7 @@ export class Players {
     );
   
     if (hayDuplicados) {
-      alert('Ya existe un jugador con ese nombre');
+      this.snackbarService.show('Ya existe un jugador con ese nombre', 'error');
       return;
     }
   
