@@ -1,11 +1,28 @@
 {
   "name": "Impostor Game",
   "short_name": "Impostor",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "#372AAC",
+  "background_color": "#020618",
   "display": "standalone",
+  "orientation": "portrait",
   "scope": "./",
   "start_url": "./",
+  "shortcuts": [
+    {
+      "name": "Nuevo Juego",
+      "short_name": "Jugar",
+      "description": "Iniciar un juego nuevo",
+      "url": "/setup",
+      "icons": [{ "src": "icon.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Cómo jugar",
+      "short_name": "Cómo jugar",
+      "description": "Ver reglas del juego",
+      "url": "/como-jugar",
+      "icons": [{ "src": "icon.png", "sizes": "96x96" }]
+    }
+  ],
   "icons": [
     {
       "src": "assets/icons/android/android-launchericon-48-48.png",
