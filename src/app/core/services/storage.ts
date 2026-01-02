@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 })
 export class Storage {
   http = inject(HttpClient);
+
   // Signals privados para escritura
   private categoriaSignal = signal<string>(this.cargarCategoriaInicial());
   private jugadoresSignal = signal<Player[]>(this.cargarJugadoresInicial());
@@ -29,12 +30,17 @@ export class Storage {
 
   private cargarJugadoresInicial(): Player[] {
     const data = localStorage.getItem('players');
-    return data ? JSON.parse(data) : [];
+    const intialPlayers: Player[] = [
+      {nombre: 'Jugador 1', rol: 'civil'}, 
+      {nombre: 'Jugador 2', rol: 'civil'}, 
+      {nombre: 'Jugador 3', rol: 'civil'}
+    ]
+    return data ? JSON.parse(data) : intialPlayers;
   }
 
   private cargarImpostoresInicial(): number | null {
     const data = localStorage.getItem('impostores');
-    return data !== null ? Number(data) : null;
+    return data !== null ? Number(data) : 1;
   }
 
   // Métodos de guardado

@@ -15,12 +15,20 @@ export class Players {
   max = 10;
   players = this.storage.jugadores;
 
-  agregarJugador(player: string) {
+  agregarJugador() {
+    let player = `Jugador ${this.players().length + 1}`;
+    let increment = 1;
+
     if (this.players().length >= this.max) {
       alert('Se ha alcanzado el número máximo de jugadores.');
       return;
     }
-    
+
+    while (this.players().find(p => p.nombre === player)){
+      player = `Jugador ${this.players().length + increment}`;
+      increment++;
+    }
+
     this.storage.agregarJugador({ nombre: player, rol: 'civil' });
   }
 

@@ -15,4 +15,8 @@ export class Setup {
   categoria = this.storage.categoria;
   jugadores = this.storage.cantidadJugadores;
   impostores = this.storage.impostores;
+
+  comprobarSetupCompleto() : boolean {
+    return this.categoria() !== '' && this.jugadores() > 2 && this.impostores() !== null;
+  }
 }

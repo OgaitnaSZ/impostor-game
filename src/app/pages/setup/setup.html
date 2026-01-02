@@ -50,7 +50,7 @@
   </div>
   
   <button
-    [disabled]="categoria() === '' || jugadores() == null || impostores() == null"
+    [disabled]="comprobarSetupCompleto() === false"
     routerLink="/game"
     class="
       w-full mt-6 p-4 rounded-lg
