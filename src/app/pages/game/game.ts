@@ -6,6 +6,7 @@ import { Game as GameService } from '../../core/services/game';
 import { PlayerReveal } from './player-reveal/player-reveal';
 import { GameTimer } from './game-timer/game-timer';
 import { GameEnd } from './game-end/game-end';
+import { CanComponentDeactivate } from '../../core/guards/game-guard';
 
 @Component({
   selector: 'app-game',
@@ -47,6 +48,7 @@ export class Game {
   }
 
   inicializarJuego() {
+    this.gameInProgress = true;
     const jugadoresCargados = this.jugadoresStorage();
     const impostores = this.impostoresStorage();
 
@@ -88,6 +90,7 @@ export class Game {
     const tiempoFinal = this.gameService.detenerTemporizador();
     this.tiempoTranscurrido.set(tiempoFinal);
     this.partidaFinalizada.set(true);
+    this.gameInProgress = false;
   }
 
   volverAJugar() {
@@ -105,5 +108,14 @@ export class Game {
   volverAlMenu() {
     this.gameService.detenerTemporizador();
     this.router.navigate(['/']);
+  }
+
+    gameInProgress = false;
+
+  canDeactivate(): boolean {
+    if (this.gameInProgress) {
+      return confirm('¿Estás seguro de que quieres salir? Perderás el progreso de la partida.');
+    }
+    return true;
   }
 }

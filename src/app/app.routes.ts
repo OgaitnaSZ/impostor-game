@@ -6,6 +6,7 @@ import { Setup } from './pages/setup/setup';
 import { Menu } from './pages/menu/menu';
 import { Impostors } from './pages/setup/impostors/impostors';
 import { ComoJugar } from './pages/como-jugar/como-jugar';
+import { gameGuard } from './core/guards/game-guard';
 
 export const routes: Routes = [
   { path: '', component: Menu },
@@ -17,7 +18,7 @@ export const routes: Routes = [
       { path: '**', component: Players},
     ]
   },
-  { path: 'game', component: Game },
+  { path: 'game', component: Game, canDeactivate: [gameGuard] },
   { path: 'como-jugar', component: ComoJugar },
   { path: '**', component: Menu },
 ];
